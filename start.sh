@@ -24,6 +24,10 @@ git checkout ${BRANCH_NAME}
 # Install any needed packages specified in requirements.txt
 pip install --no-cache-dir -r requirements.txt
 
+
+gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+
+
 # Mount the GCS bucket using default credentials
 gcsfuse --implicit-dirs --key-file='' $GCS_BUCKET_NAME /mnt/gcs_bucket
 

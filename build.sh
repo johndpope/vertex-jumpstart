@@ -28,18 +28,26 @@ echo "Building new image with tag: $NEW_TAG"
 # Build the Docker image
 DOCKER_BUILDKIT=1 docker build --build-arg="WANDB_API_KEY=$WANDB_KEY" -t gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG .
 
-# Push the Docker image
-docker push gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG
+# Ask for confirmation before pushing
+read -p "Do you want to push the image gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG to GCR? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    # Push the Docker image
+    docker push gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG
 
-NEW_IMAGE_URI="gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG"
-echo "New image pushed: $NEW_IMAGE_URI"
+    NEW_IMAGE_URI="gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG"
+    echo "New image pushed: $NEW_IMAGE_URI"
 
-# Update the job_config.yaml file
-if [ -f "job_config.yaml" ]; then
-    sed -i "s|imageUri: '.*'|imageUri: '$NEW_IMAGE_URI'|" job_config.yaml
-    echo "Updated job_config.yaml with new Image URI"
-    echo "Updated job_config.yaml contents:"
-    cat job_config.yaml
+    # Update the job_config.yaml file
+    if [ -f "job_config.yaml" ]; then
+        sed -i "s|imageUri: '.*'|imageUri: '$NEW_IMAGE_URI'|" job_config.yaml
+        echo "Updated job_config.yaml with new Image URI"
+        echo "Updated job_config.yaml contents:"
+        cat job_config.yaml
+    else
+        echo "job_config.yaml not found. Please make sure it exists in the current directory."
+    fi
 else
-    echo "job_config.yaml not found. Please make sure it exists in the current directory."
+    echo "Image push cancelled."
 fi

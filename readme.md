@@ -4,7 +4,8 @@ This guide will help you get started with training PyTorch models using Google C
 
 ## Prerequisites
 
-1. Google Cloud Platform (GCP) account
+1. Google Cloud Platform (GCP) account + (service account for cloud storage access)
+   
 2. Google Cloud SDK installed and configured
 3. Docker installed on your local machine
 4. Weights & Biases (wandb) account
@@ -46,6 +47,12 @@ export GCP_PROJECT=your-project-id
 export GOOGLE_CLOUD_BUCKET_NAME=your-bucket-name
 export WANDB_KEY=your-wandb-api-key
 ```
+
+**Use Service Account Key**
+
+Create a service account with the necessary permissions (Storage Admin, Storage Object Creator, etc.) in the Google Cloud Console.
+Generate a JSON key for this service account and download it.
+google-service-account-key.json
 
 
 ### 4. Uploading Files to Your Bucket
