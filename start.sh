@@ -44,7 +44,11 @@ fi
 
 # Mount the GCS bucket using default credentials
 echo "Mounting GCS bucket: $GCS_BUCKET_NAME to $MOUNT_POINT"
-gcsfuse --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME $MOUNT_POINT
+gcsfuse --debug_fuse  --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME $MOUNT_POINT
+
+# echo "Using publically available bucket"
+# gcsfuse --debug_fuse  --implicit-dirs  --anonymous-access $GCS_BUCKET_NAME $MOUNT_POINT
+
 
 if [ $? -eq 0 ]; then
     echo "Successfully mounted GCS bucket to $MOUNT_POINT"

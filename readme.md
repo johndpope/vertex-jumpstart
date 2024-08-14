@@ -246,6 +246,9 @@ workerPoolSpecs:
         value: https://github.com/johndpope/imf.git
 
 ```
+![Alt text](jobs.png)
+
+
 
 
 ### 3. Monitor Training Progress and CPU Usage
@@ -266,6 +269,9 @@ gcloud ai custom-jobs describe JOB_ID
 ```
 
 Replace `JOB_ID` with your actual job ID.
+
+
+![Alt text](logs.png)
 
 ## File Descriptions
 
@@ -321,3 +327,13 @@ export GITHUB_REPO="https://github.com/johndpope/imf.git"
 ```
 
 
+if you want to use publically available bucket  use --anonymous-access in start.sh
+```shell
+# DISABLE THIS
+echo "Mounting GCS bucket: $GCS_BUCKET_NAME to $MOUNT_POINT"
+# gcsfuse --debug_fuse  --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME $MOUNT_POINT
+
+# echo "Using publically available bucket"
+gcsfuse --debug_fuse  --implicit-dirs  --anonymous-access $GCS_BUCKET_NAME $MOUNT_POINT
+
+```

@@ -13,7 +13,7 @@ RUN echo "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -c -s) 
     apt-get install -y gcsfuse
 
 # Install google-cloud-storage
-RUN pip install google-cloud-storage
+RUN pip install google-cloud-storage  python-json-logger
 
 # Set arguments for the branch name and WandB API key
 
