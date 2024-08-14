@@ -15,6 +15,8 @@ if [ -z "$GITHUB_REPO" ]; then
     exit 1
 fi
 
+mkdir bla
+cd bla
 # Clone the repository and checkout the specified branch
 git clone $GITHUB_REPO .
 git checkout ${BRANCH_NAME}
@@ -22,8 +24,8 @@ git checkout ${BRANCH_NAME}
 # Install any needed packages specified in requirements.txt
 pip install --no-cache-dir -r requirements.txt
 
-# Mount the GCS bucket
-gcsfuse --implicit-dirs $GCS_BUCKET_NAME /mnt/gcs_bucket
+# Mount the GCS bucket using default credentials
+gcsfuse --implicit-dirs --key-file='' $GCS_BUCKET_NAME /mnt/gcs_bucket
 
 # Run the training script
 python train.py

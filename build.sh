@@ -1,8 +1,34 @@
+#!/bin/bash
+
+# Set your environment variables
 echo $GCP_PROJECT
 echo $GOOGLE_CLOUD_BUCKET_NAME
 export IMAGE_NAME=pytorch-training
-DOCKER_BUILDKIT=1 docker build --build-arg="WANDB_API_KEY=$WANDB_KEY"  -t gcr.io/$GCP_PROJECT/$IMAGE_NAME:v1.04 .
 
-docker push gcr.io/$GCP_PROJECT/$IMAGE_NAME:v1.04
+# Function to increment version
+increment_version() {
+  local version=$1
+  local delimiter=.
+  local array=($(echo "$version" | tr $delimiter '\n'))
+  array[$((${#array[@]} - 1))]=$((${array[$((${#array[@]} - 1))]} + 1))
+  echo $(local IFS=$delimiter ; echo "${array[*]}")
+}
 
-# make public gsutil iam ch allUsers:objectViewer gs://artifacts.$GCP_PROJECT.appspot.com
+# Get the latest version
+LATEST_TAG=$(gcloud container images list-tags gcr.io/$GCP_PROJECT/$IMAGE_NAME --format='get(tags)' --sort-by=~tags | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+
+if [ -z "$LATEST_TAG" ]; then
+  NEW_TAG="v1.0.0"
+else
+  NEW_TAG="v$(increment_version "${LATEST_TAG#v}")"
+fi
+
+echo "Building new image with tag: $NEW_TAG"
+
+# Build the Docker image
+DOCKER_BUILDKIT=1 docker build --build-arg="WANDB_API_KEY=$WANDB_KEY" -t gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG .
+
+# Push the Docker image
+docker push gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG
+
+echo "New image pushed: gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG"
