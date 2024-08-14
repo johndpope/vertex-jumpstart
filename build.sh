@@ -51,3 +51,7 @@ then
 else
     echo "Image push cancelled."
 fi
+
+
+echo "You job_config.yaml has been updated to run latest build version..."
+echo "Now run ./push-job.sh to fire up training job 🚀"
