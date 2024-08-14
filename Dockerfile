@@ -27,7 +27,7 @@ RUN if [ -z "$WANDB_API_KEY" ]; then \
         pip install wandb && wandb login $WANDB_API_KEY; \
     fi
 
-COPY google-service-account-key.json google_service_key.json
+COPY google-service-key.json google_service_key.json
 ENV GOOGLE_APPLICATION_CREDENTIALS=google_service_key.json
 
 
