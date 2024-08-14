@@ -15,7 +15,7 @@ increment_version() {
 }
 
 # Get the latest version
-LATEST_TAG=$(gcloud container images list-tags gcr.io/$GCP_PROJECT/$IMAGE_NAME --format='get(tags)' --sort-by=~tags | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+LATEST_TAG=$(gcloud container images list-tags gcr.io/$GCP_PROJECT/$IMAGE_NAME --format='get(tags)' --sort-by=~tags | tr ';' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -rV | head -n 1)
 
 if [ -z "$LATEST_TAG" ]; then
   NEW_TAG="v1.0.0"
