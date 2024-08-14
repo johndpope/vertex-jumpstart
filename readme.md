@@ -24,6 +24,10 @@ This guide will help you get started with training PyTorch models using Google C
 (**PRO TIP** - you may want to toggle on just these to help you find things)
 
 
+also use this (for branch highlighting) https://ohmyz.sh/
+
+
+
 ### 2. Set up Google Cloud Storage
 
 1. Create a new GCS bucket:
@@ -36,6 +40,7 @@ This guide will help you get started with training PyTorch models using Google C
 
 Set the following environment variables:
 
+.zshrc
 ```bash
 export GCP_PROJECT=your-project-id
 export GOOGLE_CLOUD_BUCKET_NAME=your-bucket-name
@@ -51,12 +56,16 @@ export WANDB_KEY=your-wandb-api-key
 
 2. Using the `gsutil` command-line tool:
    ```bash
+   pip install google-cloud-storage
+
    gsutil cp [LOCAL_FILE_PATH] gs://[BUCKET_NAME]/
+   
    ```
    
-   Example:
+   Example - recursive copy to bucket:
    ```bash
-   gsutil cp ./my_training_data.csv gs://my-pytorch-bucket/
+   gsutil mkdir gs://mybucket/celebvhq/35666/images/
+   gsutil -m cp -r -p /media/2TB/celebvhq/35666/images/* gs://$GOOGLE_CLOUD_BUCKET_NAME/celebvhq/35666/images/
    ```
 
 3. To upload an entire directory:
