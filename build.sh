@@ -31,4 +31,15 @@ DOCKER_BUILDKIT=1 docker build --build-arg="WANDB_API_KEY=$WANDB_KEY" -t gcr.io/
 # Push the Docker image
 docker push gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG
 
-echo "New image pushed: gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG"
+NEW_IMAGE_URI="gcr.io/$GCP_PROJECT/$IMAGE_NAME:$NEW_TAG"
+echo "New image pushed: $NEW_IMAGE_URI"
+
+# Update the job_config.yaml file
+if [ -f "job_config.yaml" ]; then
+    sed -i "s|imageUri: '.*'|imageUri: '$NEW_IMAGE_URI'|" job_config.yaml
+    echo "Updated job_config.yaml with new Image URI"
+    echo "Updated job_config.yaml contents:"
+    cat job_config.yaml
+else
+    echo "job_config.yaml not found. Please make sure it exists in the current directory."
+fi

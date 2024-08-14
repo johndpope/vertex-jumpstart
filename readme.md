@@ -1,5 +1,18 @@
+Cloud Storage
 upload videos / extracted frames to google storage
 
+
+
+**Required Google Cloud Roles**
+```
+Logs Viewer role (roles/logging.viewer):
+Cloud AI Platform Viewer
+AI Platform Admin 
+Artifact Registry Create-on-Push Writer 
+Compute Admin 
+Storage Object User 
+Vertex AI administrator
+```
 
 ```shell
 
