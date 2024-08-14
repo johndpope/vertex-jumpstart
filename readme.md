@@ -210,6 +210,11 @@ This script will:
 - Push the image to Google Container Registry
 - Update the `job_config.yaml` file with the new image URI
 
+
+They should end up in the artifacts with version bumped.
+![Alt text](artifacts.png)
+
+
 ### 2. Submit Training Job
 
 Use the `push-job.sh` script to submit your training job:
@@ -290,3 +295,24 @@ Replace `JOB_ID` with your actual job ID.
 - [Google Cloud IAM Documentation](https://cloud.google.com/iam/docs)
 
 For more detailed information or support, please refer to the official documentation of each tool or service used in this project.
+
+
+
+
+## TROUBLESHOOTING run docker locally
+you should be able to run / boot your docker container with the run.sh
+
+it should be able to connect / mount cloud storage
+if you don't have sensitive training data - consider making bucket public???
+![Alt text](gcloud.png)
+
+```shell
+export GCP_PROJECT=kommunityproject
+export IMAGE_NAME="pytorch-training"
+export GCS_BUCKET_NAME="gs://jp-ai-experiments"
+export BRANCH_NAME="feat/ada-fixed4"
+export GITHUB_REPO="https://github.com/johndpope/imf.git"
+
+```
+
+
