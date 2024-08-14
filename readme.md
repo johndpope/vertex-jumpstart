@@ -306,6 +306,11 @@ it should be able to connect / mount cloud storage
 if you don't have sensitive training data - consider making bucket public???
 ![Alt text](gcloud.png)
 
+
+install gcsfuse locally to mount your cloud storage 
+https://cloud.google.com/storage/docs/gcsfuse-install
+
+
 ```shell
 export GCP_PROJECT=kommunityproject
 export IMAGE_NAME="pytorch-training"
