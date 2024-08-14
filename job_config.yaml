@@ -8,7 +8,7 @@ workerPoolSpecs:
     # acceleratorCount: 1
   replicaCount: 1
   containerSpec:
-    imageUri: 'gcr.io/kommunityproject/pytorch-training:v1.0.2'      
+    imageUri: 'gcr.io/kommunityproject/pytorch-training:v1.0.3'      
     env:
       - name: GCS_BUCKET_NAME
         value: gs://jp-ai-experiments
