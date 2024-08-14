@@ -29,7 +29,7 @@ gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 
 
 # Mount the GCS bucket using default credentials
-gcsfuse --implicit-dirs --key-file='' $GCS_BUCKET_NAME /mnt/gcs_bucket
+gcsfuse --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME /mnt/gcs_bucket
 
 # Run the training script
 python train.py

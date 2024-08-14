@@ -27,8 +27,9 @@ RUN if [ -z "$WANDB_API_KEY" ]; then \
         pip install wandb && wandb login $WANDB_API_KEY; \
     fi
 
-COPY google-service-key.json google_service_key.json
-ENV GOOGLE_APPLICATION_CREDENTIALS=google_service_key.json
+COPY google_service_key.json google_service_key.json
+# Set the environment variable for Google Cloud authentication
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/google_service_key.json
 
 
 # Create a mount point for the GCS bucket
