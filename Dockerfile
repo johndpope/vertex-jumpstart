@@ -18,6 +18,7 @@ RUN pip install google-cloud-storage
 # Set arguments for the branch name and WandB API key
 ARG BRANCH_NAME
 ARG WANDB_API_KEY
+ARG GITHUB_REPO
 
 # Check for WandB API key and log in or throw an error
 RUN if [ -z "$WANDB_API_KEY" ]; then \
@@ -31,14 +32,10 @@ RUN if [ -z "$BRANCH_NAME" ]; then \
         echo "Error: BRANCH_NAME not provided" && exit 1; \
     fi
 
-# Clone your repository and checkout the specified branch
-RUN git clone https://github.com/johndpope/imf.git . && \
-    git checkout ${BRANCH_NAME}
-
-# Install any needed packages specified in requirements.txt
-RUN ls -l && \
-    cat requirements.txt && \
-    pip install --no-cache-dir -r requirements.txt
+# Check for GITHUB_REPO and exit if not provided
+RUN if [ -z "$GITHUB_REPO" ]; then \
+        echo "Error: GITHUB_REPO not provided" && exit 1; \
+    fi
 
 # Create a mount point for the GCS bucket
 RUN mkdir -p /mnt/gcs_bucket

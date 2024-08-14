@@ -8,7 +8,11 @@ workerPoolSpecs:
     # acceleratorCount: 1
   replicaCount: 1
   containerSpec:
-    imageUri: 'gcr.io/kommunityproject/pytorch-training:v1.01'
-    args:
-      - "--data_dir=gs://jp-ai-experiments/imf/data"
-      - "--output_dir=gs://jp-ai-experiments/imf/output"
+    imageUri: 'gcr.io/kommunityproject/pytorch-training:v1.01'      
+    env:
+      - name: GCS_BUCKET_NAME
+        value: gs://jp-ai-experiments
+      - name: BRANCH_NAME
+        value: feat/ada-fixed4
+      - name: GITHUB_REPO
+        value: https://github.com/johndpope/imf.git
