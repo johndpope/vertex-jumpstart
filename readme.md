@@ -310,6 +310,7 @@ you should be able to run / boot your docker container with the run.sh
 
 it should be able to connect / mount cloud storage
 if you don't have sensitive training data - consider making bucket public???
+grant access to **allUsers**
 ![Alt text](gcloud.png)
 
 

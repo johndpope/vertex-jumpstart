@@ -40,14 +40,16 @@ if [ ! -d "$MOUNT_POINT" ]; then
     echo "Creating mount point directory: $MOUNT_POINT"
     sudo mkdir -p $MOUNT_POINT
     sudo chown $USER:$USER $MOUNT_POINT
+
 fi
 
 # Mount the GCS bucket using default credentials
 echo "Mounting GCS bucket: $GCS_BUCKET_NAME to $MOUNT_POINT"
-gcsfuse --debug_fuse  --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME $MOUNT_POINT
+gcsfuse  --file-cache --debug_fuse  --implicit-dirs --key-file=$GOOGLE_APPLICATION_CREDENTIALS $GCS_BUCKET_NAME $MOUNT_POINT
 
 # echo "Using publically available bucket"
-# gcsfuse --debug_fuse  --implicit-dirs  --anonymous-access $GCS_BUCKET_NAME $MOUNT_POINT
+sudo mkdir -p image-cache
+# gcsfuse  --implicit-dirs  --anonymous-access $GCS_BUCKET_NAME $MOUNT_POINT
 
 
 if [ $? -eq 0 ]; then
@@ -57,6 +59,7 @@ else
     exit 1
 fi
 
+echo "Running training.... 🏄"
 # Run the training script
 python train.py
 
