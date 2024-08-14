@@ -1,0 +1,5 @@
+# Contents of policy.yaml:
+bindings:
+- members:
+  - allUsers
+  role: roles/artifactregistry.reader
