@@ -30,7 +30,7 @@ RUN if [ -z "$WANDB_API_KEY" ]; then \
 # create here https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project
 COPY google_service_key.json google_service_key.json
 # Set the environment variable for Google Cloud authentication
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app/google_service_key.json
+ENV GOOGLE_APPLICATION_CREDENTIALS='/app/google_service_key.json'
 
 # Create a mount point for the GCS bucket
 RUN mkdir -p /mnt/gcs_bucket
