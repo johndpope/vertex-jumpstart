@@ -3,7 +3,7 @@
 # Set your environment variables
 export GCP_PROJECT=kommunityproject
 export IMAGE_NAME="pytorch-training"
-export GCS_BUCKET_NAME="gs://jp-ai-experiments"
+export GCS_BUCKET_NAME="gs://jp-ai"
 export BRANCH_NAME="feat/ada-fixed4"
 export GITHUB_REPO="https://github.com/johndpope/imf.git"
 

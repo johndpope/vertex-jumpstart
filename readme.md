@@ -47,9 +47,8 @@ export WANDB_KEY=your-wandb-api-key
 
 1. Create a new GCS bucket:
    ```
-   gsutil mb gs://$GOOGLE_CLOUD_BUCKET_NAME
+   ./create_bucket.sh
    ```
-2. Replace `YOUR_BUCKET_NAME` in the `job_config.yaml` file.
 
 ### 3. Configure Environment Variables
 

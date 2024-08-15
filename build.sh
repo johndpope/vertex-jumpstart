@@ -1,11 +1,24 @@
 #!/bin/bash
 
-# Set your environment variables
-echo "Current project set to $PROJECT_ID"
-echo "Target bucket name $GOOGLE_CLOUD_BUCKET_NAME"
+# Function to check if an environment variable is set
+check_env_var() {
+    if [ -z "${!1}" ]; then
+        echo "Error: $1 is not set. Please set this environment variable before running the script."
+        exit 1
+    fi
+}
 
+# Check required environment variables
+check_env_var "GCP_PROJECT"
+check_env_var "GOOGLE_CLOUD_BUCKET_NAME"
+check_env_var "WANDB_KEY"
+
+# Set your environment variables
+echo "Project name: $GCP_PROJECT"
+
+echo "Target bucket name: $GOOGLE_CLOUD_BUCKET_NAME"
 export IMAGE_NAME=pytorch-train
-echo "Target image name $IMAGE_NAME"
+echo "Target image name: $IMAGE_NAME"
 
 # Function to increment version
 increment_version() {
@@ -44,7 +57,8 @@ then
     # Update the job_config.yaml file
     if [ -f "job_config.yaml" ]; then
         sed -i "s|imageUri: '.*'|imageUri: '$NEW_IMAGE_URI'|" job_config.yaml
-        echo "Updated job_config.yaml with new Image URI"
+        sed -i "s|value: gs://.*|value: gs://$GOOGLE_CLOUD_BUCKET_NAME|" job_config.yaml
+        echo "Updated job_config.yaml with new Image URI and bucket name"
         echo "Updated job_config.yaml contents:"
         cat job_config.yaml
     else
@@ -54,6 +68,19 @@ else
     echo "Image push cancelled."
 fi
 
-
-echo "You job_config.yaml has been updated to run latest build version..."
+echo "IAM policies updated. Your job_config.yaml has been updated to run latest build version..."
 echo "Now run ./push-job.sh to fire up training job 🚀"
+
+# Ask for confirmation before pushing
+read -p "To access the storage bucket you need to grant iam policy binding for service account (y/n) " -n 1 -r
+echo
+# Update the IAM policy binding
+echo "Updating IAM policy binding..."
+gcloud projects add-iam-policy-binding $GCP_PROJECT \
+    --member=serviceAccount:$GCP_PROJECT@appspot.gserviceaccount.com \
+    --role=roles/storage.objectViewer
+
+gcloud projects add-iam-policy-binding $GCP_PROJECT \
+    --member=serviceAccount:$GCP_PROJECT@appspot.gserviceaccount.com \
+    --role=roles/aiplatform.user
+

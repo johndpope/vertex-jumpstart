@@ -4,7 +4,7 @@ FROM us-docker.pkg.dev/vertex-ai/training/pytorch-xla.2-2.py310:latest
 WORKDIR /app
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y git curl gnupg lsb-release fuse
+RUN apt-get update && apt-get install -y git curl gnupg lsb-release fuse zip
 
 # Install gcsfuse
 RUN echo "deb http://packages.cloud.google.com/apt gcsfuse-$(lsb_release -c -s) main" | tee /etc/apt/sources.list.d/gcsfuse.list && \
