@@ -115,9 +115,18 @@ fi
 
 echo "Setup complete. $MOUNT_POINT now contains the extracted contents of the GCS bucket."
 
-echo "Running training.... 🏄"
-# Run the training script
-python train.py
+# echo "Running training.... 🏄"
+# # Run the training script
+# python train.py
 
-# Unmount the GCS bucket
-fusermount -u /mnt/gcs_bucket
+# # Unmount the GCS bucket
+# fusermount -u /mnt/gcs_bucket
+
+echo "Environment setup complete. Waiting for interactive web access..."
+echo "You can now use the Vertex AI console to access this instance interactively."
+echo "To start training manually, run: python train.py"
+
+# Wait indefinitely
+while true; do
+    sleep 3600  # Sleep for 1 hour
+done

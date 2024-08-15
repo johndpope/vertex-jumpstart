@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # Set your environment variables
-export GCP_PROJECT=kommunityproject
+
 export IMAGE_NAME="pytorch-train"
 export GCS_BUCKET_NAME="gs://jp-ai"
 export BRANCH_NAME="feat/ada-fixed4"
 export GITHUB_REPO="https://github.com/johndpope/imf.git"
 
 echo "Using image_name :$IMAGE_NAME" 
+echo "Using GCP_PROJECT :$GCP_PROJECT" 
+
+
 # Function to get the latest local tag
 get_latest_local_tag() {
     docker images --format '{{.Tag}}' gcr.io/$GCP_PROJECT/$IMAGE_NAME | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -rV | head -n 1
