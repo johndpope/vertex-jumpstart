@@ -1,9 +1,11 @@
 #!/bin/bash
 
 # Set your environment variables
-echo $GCP_PROJECT
-echo $GOOGLE_CLOUD_BUCKET_NAME
-export IMAGE_NAME=pytorch-training
+echo "Current project set to $PROJECT_ID"
+echo "Target bucket name $GOOGLE_CLOUD_BUCKET_NAME"
+
+export IMAGE_NAME=pytorch-train
+echo "Target image name $IMAGE_NAME"
 
 # Function to increment version
 increment_version() {

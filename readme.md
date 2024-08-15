@@ -25,7 +25,21 @@ This guide will help you get started with training PyTorch models using Google C
 (**PRO TIP** - you may want to toggle on just these to help you find things)
 
 
+
+
 also use this (for branch highlighting) https://ohmyz.sh/
+```shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+Add to .zshrc
+```shell
+plugins=(git)
+ 
+export GCP_PROJECT=your-project-id
+export GOOGLE_CLOUD_BUCKET_NAME=your-bucket-name
+export WANDB_KEY=your-wandb-api-key
+```
 
 
 
@@ -33,7 +47,7 @@ also use this (for branch highlighting) https://ohmyz.sh/
 
 1. Create a new GCS bucket:
    ```
-   gsutil mb gs://YOUR_BUCKET_NAME
+   gsutil mb gs://$GOOGLE_CLOUD_BUCKET_NAME
    ```
 2. Replace `YOUR_BUCKET_NAME` in the `job_config.yaml` file.
 
@@ -41,12 +55,6 @@ also use this (for branch highlighting) https://ohmyz.sh/
 
 Set the following environment variables:
 
-.zshrc
-```bash
-export GCP_PROJECT=your-project-id
-export GOOGLE_CLOUD_BUCKET_NAME=your-bucket-name
-export WANDB_KEY=your-wandb-api-key
-```
 
 **Use Service Account Key**
 

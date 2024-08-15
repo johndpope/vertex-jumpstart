@@ -1,14 +1,14 @@
 workerPoolSpecs:
   machineSpec:
-    # machineType: n1-standard-8
-    machineType: n1-standard-32
-    acceleratorType: NVIDIA_TESLA_V100
+    machineType: n1-standard-8
+    # machineType: n1-standard-32
+    # acceleratorType: NVIDIA_TESLA_V100
     # machineType: a2-ultragpu-1g
     # acceleratorType: NVIDIA_A100_80GB
-    acceleratorCount: 4
+    # acceleratorCount: 4
   replicaCount: 1
   containerSpec:
-    imageUri: 'gcr.io/kommunityproject/pytorch-training:v1.0.5'     
+    imageUri: 'gcr.io/kommunityproject/pytorch-train:v1.0.2'     
     env:
       - name: GCS_BUCKET_NAME
         value: gs://jp-ai-experiments
