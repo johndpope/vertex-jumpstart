@@ -75,12 +75,20 @@ echo "Now run ./push-job.sh to fire up training job 🚀"
 read -p "To access the storage bucket you need to grant iam policy binding for service account (y/n) " -n 1 -r
 echo
 # Update the IAM policy binding
-echo "Updating IAM policy binding..."
+# Assign Storage Object Viewer role
 gcloud projects add-iam-policy-binding $GCP_PROJECT \
     --member=serviceAccount:$GCP_PROJECT@appspot.gserviceaccount.com \
     --role=roles/storage.objectViewer
 
+# Assign Logs Writer role to Cloud ML service account
+gcloud projects add-iam-policy-binding $GCP_PROJECT \
+    --member=serviceAccount:$GCP_PROJECT@appspot.gserviceaccount.com \
+    --role=roles/logging.logWriter
+
+# Assign AI Platform User role
 gcloud projects add-iam-policy-binding $GCP_PROJECT \
     --member=serviceAccount:$GCP_PROJECT@appspot.gserviceaccount.com \
     --role=roles/aiplatform.user
 
+echo "IAM policies updated. Your job_config.yaml has been updated to run latest build version..."
+echo "Now run ./push-job.sh to fire up training job 🚀"
