@@ -17,7 +17,7 @@ def play_sound():
         except subprocess.CalledProcessError:
             print("Error playing sound. Make sure 'paplay' is installed.")
     else:
-        print("✅ Job is live. check ngrok - https://dashboard.ngrok.com/cloud-edge/endpoints/")
+        print("✅ Job is live. see - 🚀 -- https://console.cloud.google.com/vertex-ai/training/custom-jobs")
 
 def poll_job_state(job_name):
     print(f"Starting to poll job: {job_name}")
