@@ -73,6 +73,23 @@ workerPoolSpecs:
    ```bash
    gsutil -m cp -r ./training_data gs://your-bucket/
    ```
+
+
+# Ubuntu/Debian
+   map google cloud storage to local drive
+   ```bash
+   export GCSFUSE_REPO=gcsfuse-`lsb_release -c -s`
+   echo "deb https://packages.cloud.google.com/apt $GCSFUSE_REPO main" | sudo tee /etc/apt/sources.list.d/gcsfuse.list
+   curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+   sudo apt-get update
+   sudo apt-get install gcsfuse
+
+   # Create mount point
+   mkdir ~/cloud-storage
+
+   # Mount bucket (replace with your bucket name)
+   gcsfuse $GOOGLE_CLOUD_BUCKET_NAME ~/cloud-storage
+   ```
 </details>
 
 <details>
