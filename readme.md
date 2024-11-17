@@ -1,7 +1,11 @@
 # Quick GPU Training on Google Cloud
 > Spin up GPU instances for temporary PyTorch training jobs on Google Cloud Platform
 
-This guide helps you quickly set up and run GPU-accelerated PyTorch training jobs on Google Cloud. Perfect for running experiments that need a few hours of GPU time without maintaining permanent infrastructure.
+This guide helps you quickly set up and run GPU-accelerated PyTorch training jobs on Google Cloud. Perfect for running experiments that need a few hours of GPU time without maintaining permanent (ec2) infrastructure.
+
+## 🎥 Demo: Submitting a GPU Training Job
+[![asciicast](https://asciinema.org/a/w3E9xmUUQ9BnT9y8synw7uAz6.svg)](https://asciinema.org/a/w3E9xmUUQ9BnT9y8synw7uAz6)
+
 
 ## 🚀 Quick Start
 
@@ -102,9 +106,9 @@ Minimum IAM roles needed:
 <summary>📚 Detailed Setup Guide</summary>
 
 ### 1. Enable Required APIs
-- Google Cloud Storage
-- AI Platform Training & Prediction
-- Container Registry
+![Alt text](just_these.png)
+
+> **PRO TIP** - Toggle on just these services to help you find things
 
 ### 2. Shell Configuration
 ```bash
@@ -117,12 +121,53 @@ export GCP_PROJECT=your-project-id
 export GOOGLE_CLOUD_BUCKET_NAME=your-bucket-name
 ```
 
-### 3. Container Registry Setup
-```bash
-gcloud auth configure-docker
+### 3. Build Process
+Your builds will appear in the artifacts with version bumped:
+![Alt text](artifacts.png)
+
+### 4. Job Management
+Monitor your training jobs in the console:
+![Alt text](jobs.png)
+
+### 5. Job Logs
+View detailed logs and metrics:
+![Alt text](logs.png)
+
+### 6. Storage Access
+For public buckets, consider granting access to allUsers:
+![Alt text](gcloud.png)
+
+### 7. Resource Configuration
+Available machine types:
+```yaml
+workerPoolSpecs:
+  machineSpec:
+    # Choose one:
+    machineType: n1-standard-8
+    # machineType: n1-standard-32
+    # machineType: a2-ultragpu-1g # For A100 80GB
+    
+    # GPU options:
+    # acceleratorType: NVIDIA_TESLA_V100
+    # acceleratorType: NVIDIA_A100_80GB
+    # acceleratorCount: 1
 ```
 
-[Full setup documentation available in the original README]
+### 8. Docker Configuration
+For local testing, set these environment variables:
+```shell
+export GCP_PROJECT=kommunityproject
+export IMAGE_NAME="pytorch-training"
+export GCS_BUCKET_NAME="gs://jp-ai-experiments"
+export BRANCH_NAME="feat/ada-fixed4"
+export GITHUB_REPO="https://github.com/johndpope/imf.git"
+```
+
+### 9. File Structure
+- `Dockerfile`: Defines training environment
+- `build.sh`: Builds and pushes Docker image
+- `job_config.yaml`: Training job configuration
+- `push-job.sh`: Submits training job
 </details>
 
 ## 📈 Monitoring
