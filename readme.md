@@ -3,6 +3,15 @@
 
 This guide helps you quickly set up and run GPU-accelerated PyTorch training jobs on Google Cloud. Perfect for running experiments that need a few hours of GPU time without maintaining permanent (ec2) infrastructure.
 
+TODO - goal of this repo was to actually get the vertex docker container to pull down a specified git repo / feature branch +  training data - and start training - logging to WANDB for validating new features - then just shut down the machine - see start.sh. this is dependent on job / docker image id 
+    imageUri: 'gcr.io/kommunityproject/pytorch-train:v1.0.18'     
+
+
+
+
+
+
+
 ## 🎥 Demo: Submitting a GPU Training Job
 [![asciicast](https://asciinema.org/a/w3E9xmUUQ9BnT9y8synw7uAz6.svg)](https://asciinema.org/a/w3E9xmUUQ9BnT9y8synw7uAz6)
 
